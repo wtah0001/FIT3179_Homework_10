@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css" />
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Noto+Sans+Display:wght@300;400&family=Open+Sans:wght@400;500&family=PT+Sans&family=Roboto:wght@900&display=swap" rel="stylesheet">
+
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+</head>
+<body>
+  <div class="page">
+    <h1>University Rankings</h1>
+    <h2>An insight on the methodologies used to for ranking universities</h2>
+    <div class="body_text">
+    There are many known University ranking organizations, with each specializing on varying scales and use different ranking methodologies. The elements which rankers base on for ranking
+    Universities will vary in effectiveness for evaluating the quality of Universities. While there is no definitive method for ranking, ranking systems are acknowledged
+    to play an important role in the higher education system (Thakur, 2007).
+    The <b>Times Higher Education World University Rankings</b> 
+    is one of the more popular ranking system that evaluates Universities in an International scale, and 
+    will the be ranking system that the following sections are based on.
+    </div>
+    <br>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="titlebox">
+          <h3>Location of the Top Universities</h3>
+        </div>
+        <div class="body_text">
+          From choropleth map below, we can observe the largest quantity of Top ranking Universities to be located in the <b>America</b>. 
+          However, out of the 3216 Universites in <b>America</b>, only 7.87% of the Universities are within the Top Rankings. 
+          The <b>United Kingdom</b> on the otherhand has 280 Universities, but 28.21% of them are within the Top Rankings.
+        </div>
+        <div id="vis1" class="vis_container"></div>
+      </div>
+    </div>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="titlebox">
+          <h3>Score difference between <b>World Ranks</b></h3>
+        </div>
+        <div class="body_text">
+          Dill and Soo (2005) states how the existence of ranking systems has contributed in improving the international market for higher education.
+          In essence, ranking systems promotes excellence 
+          from Universities due to the competition for achieving <rank>top ranks</rank>.
+        </div>
+        <div id="vis2" class="vis_container"></div>
+      </div>
+    </div>
+  </div> <!-- end page -->
+<script type="text/javascript">
+  var spec1 = "choropleth_map/js/choropleth_map.vg.json";
+      vegaEmbed('#vis1', spec1).then(function(result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+      }).catch(console.error);
+
+  var spec2 = "line_chart/js/line_chart.vg.json";
+  vegaEmbed('#vis2', spec2).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+</script>
+</body>
+</html>

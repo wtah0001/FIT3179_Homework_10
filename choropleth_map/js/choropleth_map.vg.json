@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text" : "Percentage of Top Ranking Universities in Every Country",
+    "subtitle": "The location of Universities within the Top 1000 World Rank",
+    "fontSize": 24,
+    "subtitleFontSize": 15
+  },
+  "width": 980,
+  "height": 500,
+  "data": {
+    "url": "https://raw.githubusercontent.com/wtah0001/FIT3179/main/js/countries.topojson",
+    "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+  },
+  "layer":[
+    {
+      "transform": [
+        {"calculate": "'No universities located in ' + datum.properties.name + '' ", "as": "note"}
+      ],
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
+      "encoding": {
+        "tooltip": {
+          "field": "note"
+        }
+      }
+    },
+    {
+    "transform": [{
+        "lookup": "properties.name",
+        "from": {
+          "data": {
+            "url": "https://raw.githubusercontent.com/wtah0001/FIT3179/main/data/viz1_data.csv"
+          },
+          "key": "COUNTRY",
+          "fields": ["OH","OHtoTH","THtoFH","FHtoOT","OTtoFT","FTtoTT","SUM","ALL"]
+        }
+      },
+      {"calculate": "parseInt(datum.OH) + parseInt(datum.OHtoTH) + parseInt(datum.THtoFH) + parseInt(datum.FHtoOT)", "as": "OHtoOT"},
+      {"calculate": "round((parseInt(datum.OH) + parseInt(datum.OHtoTH) + parseInt(datum.THtoFH) + parseInt(datum.FHtoOT))/1000 * 10000)/100", "as": "Top_perc"},
+      {"calculate": "round((parseInt(datum.OH) + parseInt(datum.OHtoTH) + parseInt(datum.THtoFH) + parseInt(datum.FHtoOT))/datum.ALL * 10000)/100", "as": "Top_perc_loc"}
+    ],
+    "projection": {
+      "type": "equirectangular"
+    },
+    "mark": {
+      "type": "geoshape"
+      },
+    "encoding": {
+      "color": {
+        "field": "Top_perc",
+        "type": "quantitative",
+        "scale": {"type": "threshold", "domain":[1,3,5,10,25], "range": ["#ffffcc","#c7e9b4","#7fcdbb","#41b6c4","#2c7fb8","#253494"]},
+        "legend": {"title": "% of Top Ranking Universities"}
+      },
+      "tooltip": [
+        {"field": "properties.name", "type": "nominal", "title": "Country Name"},
+        {"field": "OHtoOT", "type": "quantitative", "title": "Universities ranking 1-1000"},
+        {"field": "ALL", "type": "quantitative", "title": "Total number of Universities"},
+        {"field": "Top_perc_loc", "type": "quantitative", "title": "% of Top University"}
+      ]
+    }
+  }]
+}

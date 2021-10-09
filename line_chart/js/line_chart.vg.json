@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
+  "height": 500,
+  "title": {
+    "text" : "Total score of the Global Top 20 Universities",
+    "subtitle": "Changes in score and ranking each year",
+    "fontSize": 24,
+    "subtitleFontSize": 15},
+  "data": {
+    "url": "https://raw.githubusercontent.com/wtah0001/FIT3179_Homework_9/main/data/viz2_data.csv"
+  },
+  "params": [
+    {
+      "name": "Year",
+      "value": 2016,
+      "bind": {
+        "input": "range",
+        "min": 2011,
+        "max": 2016,
+        "step": 1,
+        "name": "Year: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.world_rank_2 <= 20" }
+  ],
+  "encoding": {
+    "x": {"field": "world_rank_2", "type": "quantitative", "title": "World Rank", "scale":{"zero": false, "domainMin":0,"domainMax":21}, "axis": {"values": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"titleFontSize": 18, "labelFontSize": 15,"grid": false}},
+    "y": {"field": "total_score", "type": "quantitative", "title": "Total Score", "scale":{"domainMin": 77,"domainMax": 97}, "axis": {"titleFontSize": 18, "labelFontSize": 15}},
+    "color": {
+      "field":"year",
+      "type":"nominal",
+      "legend": {"title": "Year"}
+    }
+  },
+  "layer": [{
+    "mark": {"type": "line", "strokeWidth": 5, "strokeOpacity": 0.1}
+    }, {
+    "encoding": {
+      "x": {
+        "field": "world_rank_2", 
+        "type": "quantitative",
+        "sort": "descending"},
+      "y": {
+        "field": "total_score",
+        "type": "quantitative",
+        "scale": {"zero": false},
+        "sort": "ascending"
+      },
+      "tooltip": [
+        {"field": "year", "type": "nominal", "title": "Country Name2"},
+        {"field": "world_rank_2", "type": "nominal", "title": "Country Name"},
+        {"field": "total_score", "type": "quantitative", "title": "Universities ranking 1-5000"}
+      ]
+  },
+  "transform": [
+    {"filter" : "datum.year == Year"}
+  ],
+    "mark": {"type": "line", "strokeWidth": 5}
+  }, {
+    "encoding": {
+      "x": {
+        "field": "world_rank_2", 
+        "type": "quantitative",
+        "sort": "descending"},
+      "y": {
+        "field": "total_score",
+        "type": "quantitative",
+        "scale": {"zero": false},
+        "sort": "ascending"
+      },
+      "tooltip": [
+        {"field": "year", "type": "nominal", "title": "Year"},
+        {"field": "world_rank_2", "type": "nominal", "title": "World rank"},
+        {"field": "university_name", "type": "nominal", "title": "University name"},
+        {"field": "country", "type": "nominal", "title": "Country"},
+        {"field": "total_score", "type": "quantitative", "title": "Total score"}
+      ]
+    },
+    "transform": [
+      {"filter" : "datum.year == Year"}
+    ],
+    "mark": {"type": "point", "size": 150, "filled": false, "fill": "white"}
+    }, {
+    "transform": [
+      {"filter" : "datum.year == Year"}
+    ],
+    "mark": {"type": "text", "align": "center", "dx": 0, "dy": -20, "fill": "black", "fontWeight": "bold"},
+    "encoding": {"text": {"field":"total_score", "type": "nominal"},
+    "size": {"value" : 15}}
+  }],
+  "config": {"view": {"stroke": null}}
+}

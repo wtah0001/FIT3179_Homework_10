@@ -1,0 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 600,
+  "title": {
+    "text" : "COVID-19 Cases per Country (13 Oct 2020)",
+    "subtitle": "Sinetgubg",
+    "subtitleFontSize": 12},
+  "data": {
+    "url": "https://raw.githubusercontent.com/wtah0001/FIT3179_Homework_9/main/data/viz2_data.csv"
+  },
+  "transform": [
+    {"filter": "datum.world_rank <= 20" }
+  ],
+  "mark": {"type": "line", "strokeWidth": 3},
+  "encoding": {
+    "x": {
+      "field": "world_rank", 
+      "type": "quantitative",
+      "sort": "descending"},
+    "color": {
+      "field": "year", 
+      "type": "nominal", "legend": null},
+    "y": {
+      "field": "total_score",
+      "type": "quantitative",
+      "scale": {"zero": false},
+      "sort": "ascending"
+    },
+    "tooltip": [
+      {"field": "year", "type": "nominal", "title": "Country Name"},
+      {"field": "datum.world_rank", "type": "nominal", "title": "Country Name"},
+      {"aggregate": "count", "type": "quantitative", "title": "% of Top University"},
+      {"field": "SUM", "type": "quantitative", "title": "Universities ranking 1-5000"},
+      {"field": "ALL", "type": "quantitative", "title": "Total number of Universities"}
+    ]
+  }
+}
